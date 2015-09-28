@@ -21,6 +21,12 @@ input[type=number] {
   font-size:200%;
   font-weight: bold;
 }
+#qrcode {
+  margin-top: 50px;
+}
+#code {
+  margin-top: 10px;
+}
 footer {
   font-size:90%;
   text-align:right;

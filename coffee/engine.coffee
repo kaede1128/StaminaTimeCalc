@@ -16,6 +16,22 @@ $().ready(
 
     # 時刻の表記を変更
     setInterval(update, 1000)
+
+    # QRコード
+    show = 'QRコードを表示する'
+    hide = 'QRコードを非表示にする'
+    $('#qrbutton').on('click', =>
+      if $('#qrbutton').text() is show
+        $('#qrbutton').text(hide)
+      else
+        $('#qrbutton').text(show)
+      $('#code').slideToggle()
+    )
+    $('#code').qrcode(
+      render  : "table",
+      text  : location.href
+    )
+    $('#qrbutton').text(show)
 )
 
 update = ->

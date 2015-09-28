@@ -2,6 +2,7 @@
 var getTime, update;
 
 $().ready(function() {
+  var hide, show;
   if ($.cookie('maxStm') != null) {
     $('#maxStm').val($.cookie('maxStm'));
   }
@@ -15,7 +16,24 @@ $().ready(function() {
     $('#nowStmInputTime').val(getTime());
     return update();
   });
-  return setInterval(update, 1000);
+  setInterval(update, 1000);
+  show = 'QRコードを表示する';
+  hide = 'QRコードを非表示にする';
+  $('#qrbutton').on('click', (function(_this) {
+    return function() {
+      if ($('#qrbutton').text() === show) {
+        $('#qrbutton').text(hide);
+      } else {
+        $('#qrbutton').text(show);
+      }
+      return $('#code').slideToggle();
+    };
+  })(this));
+  $('#code').qrcode({
+    render: "table",
+    text: location.href
+  });
+  return $('#qrbutton').text(show);
 });
 
 update = function() {
