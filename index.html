@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>Password Generator</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="./js/jquery.cookie.min.js"></script>
+<script src="./js/bootstrap.min.js"></script>
+<script src="./js/engine.js"></script>
+<script>
+</script>
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="./css/index.css">
+<style>
+</style>
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <a id="NavLink" class="navbar-brand" href="./">デレステスタミナ計算</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://twitter.com/rev84" target="_blank">developed by @rev84</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<center>
+  <h1>デレステスタミナ計算</h1>
+<!--
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="rev84" data-lang="ja" data-size="large" data-hashtags="passwordgenerator">ツイート</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+-->
+
+<table>
+  <tr>
+    <th>現在</th>
+    <th></th>
+    <th>最大</th>
+  </tr>
+  <tr>
+    <td><input type="hidden" id="nowStmInputTime"><input type="number" id="nowStm" min="1" value=""></td>
+    <td class="fontBig">&nbsp;/&nbsp;</td>
+    <td><input type="number" id="maxStm" min="1" max="288" value="1"></td>
+  </tr>
+</table>
+
+
+<table class="table table-bordered" style="min-width:400px;width:33%;">
+  <tr>
+    <th colspan="2">スタミナ<br>情報</th>
+    <td>
+      <span class="time" id="atStr"></span>に完全回復<br>
+      あと<span class="time" id="reqStr"></span>
+    </td>
+  </tr>
+</table>
+
+</center>
+
+<footer>
+favicon:<a href="http://nx.myafi.net/" target="_blank">Re:vre</a>
+</footer>
+</body>
+</html>
