@@ -10,8 +10,14 @@ $().ready(
     # 現在スタミナを入力
     $('#nowStm').on('change', ->
       # 現在時刻を保存
-      $('#nowStmInputTime').val(getTime())
+      $('#nowStmInputTime').val getTime()
       update()
+    )
+    # Googleカレンダー
+    $('#googleCalendar').on('click', ->
+      return if +new Date $('#calendarDate').val() < +new Date()
+      date = new Date Number $('#calendarDate').val()
+      window.open getLink4google date
     )
 
     # 時刻の表記を変更
@@ -45,18 +51,43 @@ update = ->
   reqStr = ''
   reqStr += if reqSec >= 60*60 then ''+Math.floor(reqSec/60/60)+' 時間' else ''
   reqStr += if reqSec >= 60 and Math.floor(reqSec/60%60) isnt 0 then ''+Math.floor(reqSec/60%60)+' 分' else ''
-  reqStr = if reqStr is '' then ' スタミナ消化しろ' else reqStr
+  reqStr = if reqStr is '' then ' はやく消化しなきゃ' else reqStr
   $('#reqStr').html(reqStr)
   
   inputDate = new Date(inputTime*1000)
   maxDate = new Date((inputTime + reqSec)*1000)
   atStr = ''
   if reqSec <= 0
-    atStr += '既'
+    atStr += 'もう時間だ'
   else
     atStr += if maxDate.getDate() isnt inputDate.getDate() then '明日 ' else '今日 '
-    atStr += ('0'+maxDate.getHours()).slice(-2)+':'+('0'+maxDate.getMinutes()).slice(-2)
+    atStr += zerofill(maxDate.getHours())+':'+zerofill(maxDate.getMinutes())
   $('#atStr').html(atStr)
+
+  # Googleカレンダー
+  $('#calendarDate').val +maxDate
+
+getLink4google = (date)->
+  'http://www.google.com/calendar/event?' +
+  'action='   + 'TEMPLATE' +
+  '&text='    + encodeURIComponent('デレステスタミナMAX') +
+  '&details=' + encodeURIComponent('デレステのスタミナがMAXになった') +
+  '&location='+ encodeURIComponent('アプリ') +
+  '&dates='   + date4google(date) + '/' + date4google(date) +
+  '&trp='     + 'false' +
+  '&sprop='   + encodeURIComponent(location.href) +
+  '&sprop='   + 'name:' + encodeURIComponent('デレステスタミナ計算機')
 
 getTime = ->
   Math.floor(+new Date()/1000)
+date4google = (date)->
+  date.getUTCFullYear() +
+  zerofill(date.getUTCMonth()+1) +
+  zerofill(date.getUTCDate()) +
+  'T' +
+  zerofill(date.getUTCHours()) +
+  zerofill(date.getUTCMinutes()) +
+  zerofill(date.getUTCSeconds()) +
+  'Z'
+zerofill = (num)->
+  ('0'+num).slice(-2)
