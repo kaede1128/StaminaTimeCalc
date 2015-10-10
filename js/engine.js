@@ -144,7 +144,7 @@ getDateStr = function(date) {
   if (date === null) {
     date = new Date();
   }
-  return '' + date.getFullYear() + '-' + zerofill(date.getMonth() + 1) + '-' + zerofill(date.getDate());
+  return '' + date.getFullYear() + '/' + zerofill(date.getMonth() + 1) + '/' + zerofill(date.getDate());
 };
 
 date4google = function(date) {
@@ -157,7 +157,7 @@ zerofill = function(num) {
 
 getPatternId = function(nowDate) {
   var baseDate, dayCount, patternId;
-  baseDate = new Date('2015-10-01 00:00:00');
+  baseDate = new Date('2015/10/01 00:00:00');
   patternId = 3;
   nowDate = new Date(getDateStr(nowDate) + ' 00:00:00');
   dayCount = (+nowDate - +baseDate) / (1000 * 60 * 60 * 24);

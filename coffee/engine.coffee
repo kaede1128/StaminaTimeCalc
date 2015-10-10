@@ -143,7 +143,7 @@ getTime = ->
 
 getDateStr = (date = null)->
   date = new Date() if date is null
-  ''+date.getFullYear()+'-'+zerofill(date.getMonth()+1)+'-'+zerofill(date.getDate())
+  ''+date.getFullYear()+'/'+zerofill(date.getMonth()+1)+'/'+zerofill(date.getDate())
 
 date4google = (date)->
   date.getUTCFullYear() +
@@ -160,7 +160,7 @@ zerofill = (num)->
 
 getPatternId = (nowDate)->
   # 基準
-  baseDate = new Date('2015-10-01 00:00:00')
+  baseDate = new Date('2015/10/01 00:00:00')
   patternId = 3
 
   nowDate = new Date(getDateStr(nowDate)+' 00:00:00')
