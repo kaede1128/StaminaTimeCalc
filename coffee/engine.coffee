@@ -22,9 +22,14 @@ $().ready(
     )
     # Googleカレンダー
     $('#googleCalendar').on('click', ->
-      return if +new Date $('#calendarDate').val() < +new Date()
+      return if Number($('#calendarDate').val()) < +new Date()
       date = new Date Number $('#calendarDate').val()
       window.open getLink4google date
+    )
+    $('#googleCalendarTore').on('click', ->
+      return if Number($('#calendarDateTore').val()) < +new Date()
+      date = new Date Number $('#calendarDateTore').val()
+      window.open getLinkTore4google date
     )
 
     # 時刻の表記を変更
@@ -77,10 +82,13 @@ update = ->
   # グループIDからトレチケタイム
   toreReqStr = ''
   toreAtStr = ''
+  toreGoogleTime = 0
   if groupId >= 0
+    $('.tore').css('display', 'table-row')
+
     dates = getToretikeDate(nowDate, groupId)
     for d in dates
-      toreTime = +d - +nowDate
+      toreTime = +d - +new Date()
       if -1000*60*60 < toreTime <= 0
         toreAtStr = 'いまトレチケタイム'
         toreReqStr = 'あと'+sec2HourMin(toreTime + 1000*60*60)
@@ -89,12 +97,16 @@ update = ->
         toreAtStr += if d.getDate() isnt inputDate.getDate() then '明日 ' else '今日 '
         toreAtStr += zerofill(d.getHours())+':'+zerofill(d.getMinutes())
         toreReqStr = sec2HourMin(toreTime)
+        toreGoogleTime = +d
         break
+  else
+    $('.tore').css('display', 'none')
   $('#toreReqStr').html(toreReqStr)
   $('#toreAtStr').html(toreAtStr)
 
   # Googleカレンダー
   $('#calendarDate').val +maxDate
+  $('#calendarDateTore').val toreGoogleTime
 
 getLink4google = (date)->
   'http://www.google.com/calendar/event?' +
@@ -106,6 +118,18 @@ getLink4google = (date)->
   '&trp='     + 'false' +
   '&sprop='   + encodeURIComponent(location.href) +
   '&sprop='   + 'name:' + encodeURIComponent('デレステスタミナ計算機')
+
+getLinkTore4google = (date)->
+  'http://www.google.com/calendar/event?' +
+  'action='   + 'TEMPLATE' +
+  '&text='    + encodeURIComponent('デレステトレチケタイム') +
+  '&details=' + encodeURIComponent('デレステのトレチケタイム') +
+  '&location='+ encodeURIComponent('アプリ') +
+  '&dates='   + date4google(date) + '/' + date4google(new Date(+date+1000*60*60)) +
+  '&trp='     + 'false' +
+  '&sprop='   + encodeURIComponent(location.href) +
+  '&sprop='   + 'name:' + encodeURIComponent('デレステスタミナ計算機')
+
 
 sec2HourMin = (time)->
   res = ''
