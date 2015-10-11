@@ -53,12 +53,14 @@ $().ready(
 )
 
 update = ->
+  # トレチケ
+  updateTore()
+
   inputTime = Number $('#nowStmInputTime').val()
   return if inputTime is 0
 
   maxStm = Number $('#maxStm').val()
   nowStm = Number $('#nowStm').val()
-  groupId = Number Number $('#groupId').val()
   reqSec = (maxStm - nowStm) * 60 * 5
 
   # スタミナMAXになる時刻
@@ -79,10 +81,16 @@ update = ->
     atStr += zerofill(maxDate.getHours())+':'+zerofill(maxDate.getMinutes())
   $('#atStr').html(atStr)
 
-  # グループIDからトレチケタイム
+  # Googleカレンダー
+  $('#calendarDate').val +maxDate
+  
+# グループIDからトレチケタイム
+updateTore = ()->
+  nowDate = new Date()
   toreReqStr = ''
   toreAtStr = ''
   toreGoogleTime = 0
+  groupId = Number Number $('#groupId').val()
   if groupId >= 0
     $('.tore').css('display', 'table-row')
 
@@ -94,7 +102,7 @@ update = ->
         toreReqStr = 'あと'+sec2HourMin(toreTime + 1000*60*60)
         break
       else if 0 < toreTime
-        toreAtStr += if d.getDate() isnt inputDate.getDate() then '明日 ' else '今日 '
+        toreAtStr += if d.getDate() isnt nowDate.getDate() then '明日 ' else '今日 '
         toreAtStr += zerofill(d.getHours())+':'+zerofill(d.getMinutes())
         toreReqStr = sec2HourMin(toreTime)
         toreGoogleTime = +d
@@ -103,9 +111,7 @@ update = ->
     $('.tore').css('display', 'none')
   $('#toreReqStr').html(toreReqStr)
   $('#toreAtStr').html(toreAtStr)
-
   # Googleカレンダー
-  $('#calendarDate').val +maxDate
   $('#calendarDateTore').val toreGoogleTime
 
 getLink4google = (date)->
